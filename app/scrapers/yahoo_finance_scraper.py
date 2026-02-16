@@ -1,3 +1,5 @@
+import logging
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
@@ -7,7 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, ElementClickInterceptedException
 from webdriver_manager.chrome import ChromeDriverManager
 
-
+logger = logging.getLogger(__name__)
 class YahooFinanceScraper:
     """Gerencia a navegação no Yahoo Finance usando Selenium."""
 
@@ -39,6 +41,7 @@ class YahooFinanceScraper:
     # ==================== NAVEGAÇÃO ====================
 
     def open_screener(self):
+        logger.info(f"Acessando URL: {self.BASE_URL}")
         """Abre a página do screener."""
         self.driver.get(self.BASE_URL)
         WebDriverWait(self.driver, 20).until(
@@ -47,6 +50,7 @@ class YahooFinanceScraper:
 
     def apply_region_filter(self, region: str):
         """Aplica filtro de região."""
+        logger.info(f"Aplicando filtro de região: {region}")
         wait = WebDriverWait(self.driver, 20)
 
         self._open_region_filter_panel(wait)
@@ -56,6 +60,7 @@ class YahooFinanceScraper:
 
     def set_page_size(self, size: int = 100):
         """Define o tamanho da página."""
+        logger.info(f"Alterando número de itens na página: {size}")
         wait = WebDriverWait(self.driver, 20)
 
         menu_button = wait.until(
