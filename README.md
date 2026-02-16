@@ -53,8 +53,8 @@ Essa separação permite testar a lógica de parsing independentemente da automa
 Clone o repositório:
 
 ```bash
-git clone <repo-url>
-cd <repo-folder>
+git clone https://github.com/Teixeira007/yahoo-equity-crawler
+cd yahoo-equity-crawler
 ```
 
 **Crie um ambiente virtual (Opcional, mas recomendado):**
