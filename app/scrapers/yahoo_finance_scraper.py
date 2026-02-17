@@ -68,7 +68,7 @@ class YahooFinanceScraper:
                 (By.CSS_SELECTOR, ".paginationContainer .menuContainer button")
             )
         )
-        menu_button.click()
+        self._safe_click(menu_button)
 
         option = wait.until(
             EC.element_to_be_clickable(
@@ -77,7 +77,7 @@ class YahooFinanceScraper:
         )
 
         old_rows_count = len(self.driver.find_elements(By.CSS_SELECTOR, "table tbody tr"))
-        option.click()
+        self._safe_click(option)
 
         wait.until(lambda d: len(d.find_elements(By.CSS_SELECTOR, "table tbody tr")) > old_rows_count)
 
@@ -85,7 +85,7 @@ class YahooFinanceScraper:
         """
         Avança para a próxima página.
         """
-        wait = WebDriverWait(self.driver, 10)
+        wait = WebDriverWait(self.driver, 20)
 
         try:
             next_button = wait.until(
@@ -104,7 +104,7 @@ class YahooFinanceScraper:
             By.CSS_SELECTOR, '.screener-table tbody tr:first-child [data-testid-cell="ticker"]'
         ).text.strip()
 
-        next_button.click()
+        self._safe_click(next_button)
 
         wait.until(
             lambda d: d.find_element(
@@ -146,8 +146,8 @@ class YahooFinanceScraper:
     def _select_region_checkbox(self, wait: WebDriverWait, region: str):
         """Seleciona o checkbox da região."""
         region_checkbox_locator = (
-            By.XPATH,
-            f"//div[contains(@class,'options')]//span[normalize-space()='{region}']/ancestor::label//input",
+            By.CSS_SELECTOR,
+            f"div[data-testid='filter-numerical'] label[title='{region}'] input",
         )
 
         region_checkbox = wait.until(EC.presence_of_element_located(region_checkbox_locator))
@@ -173,10 +173,10 @@ class YahooFinanceScraper:
             EC.element_to_be_clickable((By.XPATH, "//button[normalize-space()='Apply']"))
         )
 
-        self.driver.execute_script(
-            "arguments[0].scrollIntoView({block: 'center', inline: 'center'});",
-            apply_button,
-        )
+        # self.driver.execute_script(
+        #     "arguments[0].scrollIntoView({block: 'center', inline: 'center'});",
+        #     apply_button,
+        # )
 
         self._safe_click(apply_button)
 

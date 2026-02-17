@@ -17,7 +17,7 @@ class YahooEquityCrawler:
         """
         self.scraper.open_screener()
         self.scraper.apply_region_filter(region)
-        self.scraper.set_page_size(100)
+        self.scraper.set_page_size()
 
         return self._extract_all_pages()
 

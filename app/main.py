@@ -30,7 +30,7 @@ def main():
         logger.info(f"Total de equities encontradas: {len(equities)}")
         
         output_path = Path(args.output)
-        CSVExporter.export(equities, str(output_path))
+        CSVExporter.export(equities, output_path)
         
         logger.info(f"Dados exportados com sucesso para: {output_path.absolute()}")
     except Exception as e:

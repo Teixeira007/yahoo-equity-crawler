@@ -1,5 +1,6 @@
 import csv
 import logging
+from pathlib import Path
 from typing import List
 from app.models.equity import Equity
 
@@ -8,10 +9,12 @@ class CSVExporter:
     """Serviço responsável por exportar dados de Equity para arquivo CSV."""
 
     @staticmethod
-    def export(equities: List[Equity], output_path: str) -> None:
+    def export(equities: List[Equity], output_path: Path) -> None:
         logger.info(f"Criando arquivo csv")
 
-        with open(output_path, 'w', newline='', encoding='utf-8') as csvfile:
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+
+        with output_path.open('w', newline='', encoding='utf-8') as csvfile:
             writer = csv.writer(csvfile)
             
             writer.writerow(["symbol", "name", "price"])
